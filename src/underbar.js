@@ -139,9 +139,6 @@
   // a certain property in it. E.g. take an array of people and return
   // an array of just their ages
   _.pluck = function(collection, key) {
-    // TIP: map is really handy when you want to transform an array of
-    // values into a new array of values. _.pluck() is solved for you
-    // as an example of this.
     return _.map(collection, function(item){
       return item[key];
     });
@@ -168,6 +165,27 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    var tally = 0;
+    var currentKey = 0;
+    if (arguments.length > 2) {
+      tally = arguments[2];
+    }
+    else {
+      tally = collection[0];
+      currentKey = 1;
+    }
+
+    if (Array.isArray(collection)) {
+      for (var i = currentKey; i < collection.length; i++) {
+        tally = iterator(tally, collection[i]);
+      }
+    }
+    else {
+      for (var i in collection) {
+        tally = iterator(tally, collection[i]);
+      }
+    }
+    return tally;
   };
 
   // Determine if the array or object contains a given value (using `===`).
