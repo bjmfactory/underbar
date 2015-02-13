@@ -218,9 +218,40 @@
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
+  // TIP: There's a very clever way to re-use every() here.
+
   _.some = function(collection, iterator) {
-    // TIP: There's a very clever way to re-use every() here.
+    var results = false;
+    var iterator;
+
+    if (arguments[1] === undefined){
+      iterator = _.identity;
+    }
+
+    _.reduce(collection, function(tally, nextToCheck){
+      if (iterator(nextToCheck)){
+        results = true;
+      }
+    }, false)
+
+    return results;
   };
+
+  // This one is close to using _.every to make it more concise.
+  // Only one of the tests fails. I'm trying to check whether all
+  // of the truth tests return "false" and if even one returns "true"
+  // then return "true" from the _.some function. The problem is how to
+  // get the iterator function from _.some into _.every so it can use that
+  // as the truth test.
+  //
+  // _.some = function(collection, iterator) {
+  //   if (_.every(collection, function(val){return !val})) {
+  //     return false;
+  //   }
+  //   else {
+  //     return true;
+  //   }
+  // };
 
 
   /**
