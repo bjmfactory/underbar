@@ -288,8 +288,19 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-  };
+    var result = arguments[0];
+    var toAdd = arguments.length;
 
+    for (var i = 1; i < toAdd; i++) {
+      for (var j in arguments[i]) {
+        if (result[j] === undefined) {
+          result[j] = arguments[i][j];
+        }
+      }
+    }
+
+    return result;
+  };
 
   /**
    * FUNCTIONS
