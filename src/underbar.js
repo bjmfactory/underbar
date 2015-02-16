@@ -393,7 +393,7 @@
     };
 
     for (var i = 0; i < length; i++){
-      randomIndex = getRandomInt(0, length);
+      randomIndex = getRandomInt(0, copy.length);
       shuffled[i] = copy[randomIndex];
       copy.splice(randomIndex, 1);
     };
